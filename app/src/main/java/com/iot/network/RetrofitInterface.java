@@ -27,4 +27,7 @@ public interface RetrofitInterface {
 
   @GET("channels/470455/feeds.json?api_key=MWREYTNW0VT7YBT6")
   Observable<Response> data();
+
+  @GET("channels/470455/feeds.json?api_key=MWREYTNW0VT7YBT6")
+  Observable<Response> dataTwo();
 }

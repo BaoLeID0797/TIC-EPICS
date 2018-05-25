@@ -1,6 +1,5 @@
 package com.iot;
 
-import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -38,19 +37,17 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
-
-@SuppressLint("Registered")
-@EActivity(R.layout.activity_main)
-public class MainActivity extends AppCompatActivity implements
+@EActivity(R.layout.activity_screen_two)
+public class ScreenTwoActivity extends AppCompatActivity implements
         OnChartGestureListener, OnChartValueSelectedListener {
 
-    @ViewById(R.id.activity_main_chart_light_and_long)
+    @ViewById(R.id.activity_screen_two_chart_light_and_long)
     protected LineChart chartLightLong;
 
-    @ViewById(R.id.activity_main_tv_long)
+    @ViewById(R.id.activity_screen_two_tv_long)
     protected TextView tvLong;
 
-    @ViewById(R.id.activity_main_tv_light)
+    @ViewById(R.id.activity_screen_two_tv_light)
     protected TextView tvLight;
 
     private CompositeSubscription subscriptions;
@@ -75,16 +72,12 @@ public class MainActivity extends AppCompatActivity implements
     private void loadData() {
         subscriptions = new CompositeSubscription();
 
-        subscriptions.add(NetworkUtil.getRetrofit().data()
+        subscriptions.add(NetworkUtil.getRetrofit().dataTwo()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(this::handleResponse, this::handleError));
     }
 
-    @Click(R.id.activity_main_btn_next_screen)
-    protected void nextScreen(){
-        ScreenTwoActivity_.intent(this).start();
-    }
 
     private void handleResponse(Response data) {
         Log.e("info", new Gson().toJson(data.getFeeds()));
@@ -93,6 +86,11 @@ public class MainActivity extends AppCompatActivity implements
 
     private void handleError(Throwable error) {
 
+    }
+
+    @Click(R.id.activity_screen_two_btn_back)
+    protected void backScreen(){
+        finish();
     }
 
     private void processData(Response data) {
@@ -225,5 +223,4 @@ public class MainActivity extends AppCompatActivity implements
     public void onNothingSelected() {
 
     }
-
 }

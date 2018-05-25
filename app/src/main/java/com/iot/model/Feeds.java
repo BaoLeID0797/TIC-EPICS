@@ -12,6 +12,7 @@ public class Feeds {
     @SerializedName("field2")
     private String field2;
 
+
     public String getCreated_at() {
         return created_at;
     }
