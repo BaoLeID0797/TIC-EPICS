@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements
     private Runnable runnable = new Runnable() {
         @Override
         public void run() {
-          init();
+            init();
         }
     };
 
@@ -94,11 +94,19 @@ public class MainActivity extends AppCompatActivity implements
     private void processData(Response data) {
         //lay data
         float count = 0;
-        for (Feeds item : data.getFeeds()) {
+        List<Feeds> dataFeeds = data.getFeeds();
+        List<Feeds> dataFeedsShow = new ArrayList<>();
+//giới hạn
+        if (dataFeeds.size() >= 10) {
+            int numberSize = dataFeeds.size() - 10;
+            for (int i = numberSize; i < dataFeeds.size(); i++) dataFeedsShow.add(dataFeeds.get(i));
+        }
+//
+        for (Feeds item : dataFeedsShow) {
             try {
                 //SimpleDateFormat sdf = new SimpleDateFormat("dd");
                 //float dataDate = Float.valueOf(sdf.format(new Date()));
-                count ++;
+                count++;
                 float dataDate = count;
                 if (!TextUtils.isEmpty(item.getField1())) {
                     lights.add(new Entry(dataDate, Float.valueOf(item.getField1())));
@@ -119,9 +127,9 @@ public class MainActivity extends AppCompatActivity implements
 
         drawChart();
 //CB
-        tvLight.setText(data.getFeeds().get(data.getFeeds().size() -1).getField1());
-        tvLong.setText(data.getFeeds().get(data.getFeeds().size() -1).getField2());
-        Toast.makeText(this,"anh sang: " + data.getFeeds().get(data.getFeeds().size() -1).getField1(), Toast.LENGTH_SHORT).show();
+        tvLight.setText(data.getFeeds().get(data.getFeeds().size() - 1).getField1());
+        tvLong.setText(data.getFeeds().get(data.getFeeds().size() - 1).getField2());
+        Toast.makeText(this, "anh sang: " + data.getFeeds().get(data.getFeeds().size() - 1).getField1(), Toast.LENGTH_SHORT).show();
     }
 
     private void drawChart() {
